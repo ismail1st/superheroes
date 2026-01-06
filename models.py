@@ -3,7 +3,7 @@ from sqlalchemy.orm import validates
 
 db = SQLAlchemy()
 
-# ---------------- HERO ----------------
+#HERO
 class Hero(db.Model):
     __tablename__ = "heroes"
 
@@ -18,7 +18,7 @@ class Hero(db.Model):
     )
 
 
-# ---------------- POWER ----------------
+#POWER
 class Power(db.Model):
     __tablename__ = "powers"
 
@@ -39,7 +39,7 @@ class Power(db.Model):
         return value
 
 
-# ---------------- HERO POWER ----------------
+# HERO POwers
 class HeroPower(db.Model):
     __tablename__ = "hero_powers"
 

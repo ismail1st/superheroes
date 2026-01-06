@@ -3,7 +3,7 @@ from flask import Flask, jsonify, request
 from flask_migrate import Migrate
 from models import db, Hero, Power, HeroPower
 
-# ----------------- APP SETUP -----------------
+# SETUP
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///heroes.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
@@ -11,12 +11,12 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db.init_app(app)
 migrate = Migrate(app, db)
 
-# ----------------- HOME -----------------
+#HOME
 @app.route("/")
 def home():
     return {"message": "Superheroes API running"}
 
-# ----------------- GET ALL HEROES -----------------
+# GET ALL HEROES
 @app.route("/heroes")
 def get_heroes():
     heroes = Hero.query.all()
@@ -28,7 +28,7 @@ def get_heroes():
         } for h in heroes
     ])
 
-# ----------------- GET HERO BY ID -----------------
+#GET HERO BY ID
 @app.route("/heroes/<int:id>")
 def get_hero(id):
     hero = Hero.query.get(id)
@@ -54,7 +54,7 @@ def get_hero(id):
         ]
     }
 
-# ----------------- GET ALL POWERS -----------------
+# GET ALL POWERS
 @app.route("/powers")
 def get_powers():
     powers = Power.query.all()
@@ -63,7 +63,7 @@ def get_powers():
         for p in powers
     ])
 
-# ----------------- GET POWER BY ID -----------------
+# GET POWER BY ID 
 @app.route("/powers/<int:id>")
 def get_power(id):
     power = Power.query.get(id)
@@ -72,7 +72,7 @@ def get_power(id):
 
     return {"id": power.id, "name": power.name, "description": power.description}
 
-# ----------------- PATCH POWER -----------------
+#PATCH POWER 
 @app.route("/powers/<int:id>", methods=["PATCH"])
 def update_power(id):
     power = Power.query.get(id)
@@ -87,7 +87,7 @@ def update_power(id):
     except Exception as e:
         return {"errors": [str(e)]}, 400
 
-# ----------------- POST HERO_POWER -----------------
+# POST HERO_POWER
 @app.route("/hero_powers", methods=["POST"])
 def create_hero_power():
     data = request.get_json()
@@ -119,6 +119,6 @@ def create_hero_power():
     except Exception as e:
         return {"errors": [str(e)]}, 400
 
-# ----------------- RUN -----------------
+
 if __name__ == "__main__":
     app.run(debug=True)
